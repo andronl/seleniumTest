@@ -1,0 +1,7 @@
+pluginManagement {
+    repositories {
+        maven { url 'http://sbtatlas.sigma.sbrf.ru/nexus/content/repositories/gradle_plugins/' }
+    }
+}
+
+rootProject.name = 'seleniumTest'

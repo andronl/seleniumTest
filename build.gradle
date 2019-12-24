@@ -1,0 +1,36 @@
+buildscript {
+    repositories {
+        maven { url 'http://sbtatlas.sigma.sbrf.ru/nexus/content/repositories/gradle_plugins/' }
+    }
+    dependencies {
+        classpath("io.franzbecker.gradle-lombok:io.franzbecker.gradle-lombok.gradle.plugin:1.14")
+    }
+}
+
+repositories {
+    maven { url 'http://sbtatlas.sigma.sbrf.ru/nexus/content/repositories/central/' }
+    maven { url 'http://sbtatlas.sigma.sbrf.ru/nexus/content/repositories/jitpack.io/' }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'groovy'
+
+version = '01.001.01'
+group = 'localbrowsers'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile("org.projectlombok:lombok:1.18.10")
+    compile("org.seleniumhq.selenium:selenium-java:3.141.59")
+
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
+test {
+    useJUnitPlatform()
+}

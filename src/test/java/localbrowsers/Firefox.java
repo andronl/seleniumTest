@@ -1,5 +1,10 @@
 package localbrowsers;
 
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -8,31 +13,26 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 import java.util.List;
 
 /**
  * Created by andrei on 22/12/19.
  */
-@Test()
 public class Firefox {
     private WebDriver driver;
 
-    @BeforeTest
+    @BeforeEach
     public void firefoxSetup() {
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setCapability("marionette", true);
-        System.setProperty("webdriver.gecko.driver", "/Users/andreilyuzin/Downloads/geckodriver");
-         driver = new FirefoxDriver();
+        System.setProperty("webdriver.gecko.driver", "./driver/geckodriver");
+        driver = new FirefoxDriver();
     }
 
     @Test
     public void test() {
-        WebDriverWait wait = new WebDriverWait(driver,40);
+        WebDriverWait wait = new WebDriverWait(driver, 40);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         driver.get("https://xn--d1apb.xn--d1achjhdicc8bh4h.xn--p1ai");
         driver.findElement(By.id("layout_104")).click();
@@ -44,22 +44,17 @@ public class Firefox {
         executor.executeScript("document.getElementsByClassName('select-aggregation-territory select2-hidden-accessible')[0].setAttribute('aria-hidden', 'false')");
         List<WebElement> elements = driver.findElements(By.className("select2-results__option"));
 
-        for (WebElement e : elements) {
-            if (e.getText().equals("Субъекты РФ")) {
-             e.click();
-             break;
-            }
-        }
+        elements.stream().filter(e -> e.getText().equals("Субъекты РФ")).findAny().get().click();
 
-        Assert.assertEquals(driver.findElement(By.cssSelector(".select2-container--below > span:nth-child(1) > span:nth-child(1)")).getText(), "Субъекты РФ");
+        Assertions.assertEquals(driver.findElement(By.cssSelector(".select2-container--below > span:nth-child(1) > span:nth-child(1)")).getText(), "Субъекты РФ");
 
         driver.findElement(By.cssSelector(".apply-filters")).click();
-        wait.until(ExpectedConditions.visibilityOf( driver.findElement(By.cssSelector(".DTFC_LeftBodyLiner > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(3)"))));
-        Assert.assertEquals(driver.findElement(By.cssSelector(".DTFC_LeftBodyLiner > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(3)")).getText(),
-        "Все МФЦ/ТОСП");
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".DTFC_LeftBodyLiner > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(3)"))));
+        Assertions.assertEquals(driver.findElement(By.cssSelector(".DTFC_LeftBodyLiner > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(3)")).getText(),
+                "Все МФЦ/ТОСП");
     }
 
-    @AfterTest
+    @AfterEach
     public void testTeardown() {
         driver.quit();
     }
