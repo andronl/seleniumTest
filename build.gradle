@@ -1,15 +1,10 @@
 buildscript {
-    repositories {
-        maven { url 'http://sbtatlas.sigma.sbrf.ru/nexus/content/repositories/gradle_plugins/' }
-    }
-    dependencies {
-        classpath("io.franzbecker.gradle-lombok:io.franzbecker.gradle-lombok.gradle.plugin:1.14")
-    }
+    repositories ()
+    dependencies ()
 }
 
 repositories {
-    maven { url 'http://sbtatlas.sigma.sbrf.ru/nexus/content/repositories/central/' }
-    maven { url 'http://sbtatlas.sigma.sbrf.ru/nexus/content/repositories/jitpack.io/' }
+    mavenCentral()
 }
 
 apply plugin: 'java'

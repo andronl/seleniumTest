@@ -32,7 +32,7 @@ public class Firefox {
 
     @Test
     public void test() {
-        WebDriverWait wait = new WebDriverWait(driver, 40);
+        WebDriverWait wait = new WebDriverWait(driver, 50);
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         driver.get("https://xn--d1apb.xn--d1achjhdicc8bh4h.xn--p1ai");
         driver.findElement(By.id("layout_104")).click();
