@@ -12,9 +12,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by andrei on 22/12/19.
@@ -46,7 +48,7 @@ public class Firefox {
 
         elements.stream().filter(e -> e.getText().equals("Субъекты РФ")).findAny().get().click();
 
-        Assertions.assertEquals(driver.findElement(By.cssSelector(".select2-container--below > span:nth-child(1) > span:nth-child(1)")).getText(), "Субъекты РФ");
+        Assertions.assertTrue(driver.findElements(By.className("selection")).stream().anyMatch(o -> o.getText().equals("Субъекты РФ")));
 
         driver.findElement(By.cssSelector(".apply-filters")).click();
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".DTFC_LeftBodyLiner > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child(1) > td:nth-child(3)"))));
